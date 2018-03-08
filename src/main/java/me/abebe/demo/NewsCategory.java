@@ -3,10 +3,9 @@ package me.abebe.demo;
 public enum NewsCategory {
     BUSINESS("business"),
     ENTERTAINMENT("entertainment"),
-    GAMING("gaming"),
     GENERAL("general"),
-    MUSIC("music"),
-    SCIENCE_NATURE("science-and-nature"),
+    HEALTH("health"),
+    SCIENCE("science"),
     SPORT("sport"),
     TECHNOLOGY("technology");
 
