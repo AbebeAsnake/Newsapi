@@ -3,6 +3,8 @@ package me.abebe.demo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
+import java.util.List;
+
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Articles {
 
@@ -11,8 +13,11 @@ public class Articles {
     private String description;
     private String url;
     private String urlToImage;
+    private Sources sources;
     private Date publishedAt;
     private Value value;
+    private NewsApi newsApi;
+
 
 
     @Override
@@ -26,6 +31,22 @@ public class Articles {
                 ", publishedAt=" + publishedAt +
                 ", value=" + value +
                 '}';
+    }
+
+    public NewsApi getNewsApi() {
+        return newsApi;
+    }
+
+    public void setNewsApi(NewsApi newsApi) {
+        this.newsApi = newsApi;
+    }
+
+    public Sources getSources() {
+        return sources;
+    }
+
+    public void setSources(Sources sources) {
+        this.sources = sources;
     }
 
     public String getTitle() {
