@@ -3,25 +3,16 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
-    <link rel="stylesheet" href="/head.css" type="text/css"/>
+    <link rel="stylesheet" href="./head.css" type="text/css"/>
 
 </head>
 <body>
 
-    <!--<ol th:each="ti : ${hey}">
-        <li th:text=${ti.title}></li>
-        <li th:text=${ti.author}></li>
-        <li th:text=${ti.description}></li>
-        <li><a th:href="${ti.url}"></a></li>
-        <li><img th:src="${ti.urlToImage}" /></li>
-        <li th:text=${ti.publishedAt}></li>
-        <p>---------------------------------------------</p>
-    </ol>-->
     <h1>headline news</h1>
 
     <div class="news-holder cf" th:each="ti : ${hey}">
 
-        <ul class="news-headlines">
+        <ul class="news-headlines" >
             <li class="selected" th:text=${ti.title}></li>
             <li  th:text=${ti.author}></li>
             <li  th:text=${ti.publishedAt}></li>
@@ -37,7 +28,6 @@
                 <p th:text=${ti.description}></p>
             </div>
             <!-- .news-content -->
-
 
             <!-- .news-content -->
 

@@ -1,11 +1,17 @@
 package me.abebe.demo;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "profile")
 public class profile {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private Source name;
+
+    @Column(name = "category")
     private Category category;
-    private Language language;
-    private Country country;
+
 
     public long getId() {
         return id;
@@ -13,14 +19,6 @@ public class profile {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Source getName() {
-        return name;
-    }
-
-    public void setName(Source name) {
-        this.name = name;
     }
 
     public Category getCategory() {
@@ -31,19 +29,5 @@ public class profile {
         this.category = category;
     }
 
-    public Language getLanguage() {
-        return language;
-    }
 
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public Country getCountry() {
-        return country;
-    }
-
-    public void setCountry(Country country) {
-        this.country = country;
-    }
 }

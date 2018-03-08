@@ -18,14 +18,17 @@ public class MainController {
         RestTemplate restTemplate = new RestTemplate();
         String url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=7f54c2f6c69248f0b2af877e2362420e";
         NewsApi api = restTemplate.getForObject(url, NewsApi.class);
-        Articles article = restTemplate.getForObject(url, Articles.class);
-      // Source sources = restTemplate.getForObject(url, Source.class);
-     //  sources.getName();
-        Articles articles = new Articles();
+
+        RestTemplate restTemplate2 = new RestTemplate();
+        //Articles article = restTemplate.getForObject(url, Articles.class);
+        Source sources = restTemplate2.getForObject("https://newsapi.org/v2/sources?apiKey=7f54c2f6c69248f0b2af877e2362420e", Source.class);
+
+       // Articles articles = new Articles();
        List<Articles> art = new ArrayList<>();
        art= api
                .getArticles();
         model.addAttribute("hey",  art);
+        //model.addAttribute("src", sources.getName());
         //model.addAttribute("src");
        /* for (Articles arts: art)
         {
@@ -42,6 +45,7 @@ public class MainController {
         }*/
        //model.addAttribute("hello", api.getArticles());
    //return api.getArticles();
+      // System.out.println(sources.getName());
        return  "index";
 
     }
