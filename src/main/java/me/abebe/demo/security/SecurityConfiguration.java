@@ -46,7 +46,8 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
             "/css/**",
             "/templates/**",
             "/js/**",
-            "/listlost"
+            "/listlost",
+
 
 
 
