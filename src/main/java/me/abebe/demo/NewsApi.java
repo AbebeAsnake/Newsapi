@@ -13,6 +13,12 @@ public class NewsApi {
     public NewsApi() {
     }
 
+    public NewsApi(String status, int totalResults, List<Articles> articles) {
+        this.status = status;
+        this.totalResults = totalResults;
+        this.articles = articles;
+    }
+
     public String getStatus() {
         return status;
     }

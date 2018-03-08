@@ -3,7 +3,6 @@ package me.abebe.demo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.Date;
-import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Articles {
@@ -13,12 +12,21 @@ public class Articles {
     private String description;
     private String url;
     private String urlToImage;
-    private Sources sources;
-    private Date publishedAt;
-    private Value value;
-    private NewsApi newsApi;
+    private Source source;
+    private String publishedAt;
 
+    public Articles(String author, String title, String description, String url, String urlToImage, Source source, String publishedAt) {
+        this.author = author;
+        this.title = title;
+        this.description = description;
+        this.url = url;
+        this.urlToImage = urlToImage;
+        this.source = source;
+        this.publishedAt = publishedAt;
+    }
 
+    public Articles() {
+    }
 
     @Override
     public String toString() {
@@ -29,24 +37,16 @@ public class Articles {
                 ", url='" + url + '\'' +
                 ", urlToImage='" + urlToImage + '\'' +
                 ", publishedAt=" + publishedAt +
-                ", value=" + value +
+
                 '}';
     }
 
-    public NewsApi getNewsApi() {
-        return newsApi;
+    public Source getSources() {
+        return source;
     }
 
-    public void setNewsApi(NewsApi newsApi) {
-        this.newsApi = newsApi;
-    }
-
-    public Sources getSources() {
-        return sources;
-    }
-
-    public void setSources(Sources sources) {
-        this.sources = sources;
+    public void setSources(Source sources) {
+        this.source = sources;
     }
 
     public String getTitle() {
@@ -89,19 +89,13 @@ public class Articles {
         this.urlToImage = urlToImage;
     }
 
-    public Date getPublishedAt() {
+    public String getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedAt(Date publishedAt) {
+    public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
     }
 
-    public Value getValue() {
-        return value;
-    }
 
-    public void setValue(Value value) {
-        this.value = value;
-    }
 }

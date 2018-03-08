@@ -2,7 +2,7 @@ package me.abebe.demo;
 
 public class profile {
     private long id;
-    private Sources name;
+    private Source name;
     private Category category;
     private Language language;
     private Country country;
@@ -15,11 +15,11 @@ public class profile {
         this.id = id;
     }
 
-    public Sources getName() {
+    public Source getName() {
         return name;
     }
 
-    public void setName(Sources name) {
+    public void setName(Source name) {
         this.name = name;
     }
 
