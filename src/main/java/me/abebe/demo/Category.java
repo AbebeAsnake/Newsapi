@@ -1,6 +1,6 @@
 package me.abebe.demo;
 
-public enum NewsCategory {
+public enum Category {
     BUSINESS("business"),
     ENTERTAINMENT("entertainment"),
     GENERAL("general"),
@@ -11,7 +11,7 @@ public enum NewsCategory {
 
     private final String categoryId;
 
-    NewsCategory(final String categoryId) {
+    Category(final String categoryId) {
         this.categoryId = categoryId;
     }
 

@@ -7,7 +7,7 @@ public class Sources {
     private String name;
     private String description;
     private String url;
-    private NewsCategory category;
+    private Category category;
     private Language language;
     private Country country;
     private List<String> logos;
@@ -53,11 +53,11 @@ public class Sources {
         this.url = url;
     }
 
-    public NewsCategory getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(NewsCategory category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

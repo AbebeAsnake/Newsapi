@@ -3,7 +3,7 @@ package me.abebe.demo;
 public class profile {
     private long id;
     private Sources name;
-    private NewsCategory category;
+    private Category category;
     private Language language;
     private Country country;
 
@@ -23,11 +23,11 @@ public class profile {
         this.name = name;
     }
 
-    public NewsCategory getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(NewsCategory category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 
