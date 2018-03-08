@@ -19,23 +19,27 @@ public class MainController {
         String url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=7f54c2f6c69248f0b2af877e2362420e";
         NewsApi api = restTemplate.getForObject(url, NewsApi.class);
         Articles article = restTemplate.getForObject(url, Articles.class);
-       // Source sources = restTemplate.getForObject(url, Source.class);
+      // Source sources = restTemplate.getForObject(url, Source.class);
+     //  sources.getName();
         Articles articles = new Articles();
        List<Articles> art = new ArrayList<>();
        art= api
                .getArticles();
-
-        for (Articles arts: art)
-        {model.addAttribute("hey",  art);
+        model.addAttribute("hey",  art);
+        //model.addAttribute("src");
+       /* for (Articles arts: art)
+        {
+            model.addAttribute("hey",  art);
             // title
-            System.out.println(arts.getTitle());
-            System.out.println(arts.getAuthor());
+
+            System.out.println(arts.getSources().getName());
+
             //System.out.println(arts.getDescription());
             //System.out.println(arts.getSources().getName());
             //System.out.println(arts.getUrl());
             //System.out.println(arts.getUrlToImage());
             //model.addAttribute("title", arts.getAuthor());
-        }
+        }*/
        //model.addAttribute("hello", api.getArticles());
    //return api.getArticles();
        return  "index";

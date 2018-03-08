@@ -3,15 +3,69 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
+    <link rel="stylesheet" href="/head.css" type="text/css"/>
+
 </head>
 <body>
 
-    <ul th:each="ti : ${hey}">
+    <!--<ol th:each="ti : ${hey}">
         <li th:text=${ti.title}></li>
         <li th:text=${ti.author}></li>
+        <li th:text=${ti.description}></li>
+        <li><a th:href="${ti.url}"></a></li>
+        <li><img th:src="${ti.urlToImage}" /></li>
+        <li th:text=${ti.publishedAt}></li>
+        <p>---------------------------------------------</p>
+    </ol>-->
+    <h1>headline news</h1>
 
-    </ul>
-</table>
+    <div class="news-holder cf" th:each="ti : ${hey}">
+
+        <ul class="news-headlines">
+            <li class="selected" th:text=${ti.title}></li>
+            <li  th:text=${ti.author}></li>
+            <li  th:text=${ti.publishedAt}></li>
+
+        </ul>
+
+        <div class="news-preview">
+
+            <div class="news-content top-content">
+                <img th:src="${ti.urlToImage}" >
+                <p><a th:href="${ti.url}">[[${ti.title}]]</a></p>
+
+                <p th:text=${ti.description}></p>
+            </div>
+            <!-- .news-content -->
+
+
+            <!-- .news-content -->
+
+        </div>
+        <!-- .news-preview -->
+
+    </div>
+    <!-- .news-holder -->
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+    <script src="/head.js"></script>
+    <script>
+        window.jQuery || document.write('<script src="js/jquery-1.8.1.min.js"><\/script>')
+    </script>
+
+    <script>
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-1965499-1']);
+        _gaq.push(['_trackPageview']);
+
+        (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+
+
 
 </body>
 </html>
