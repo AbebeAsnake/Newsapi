@@ -1,8 +1,13 @@
 package me.abebe.demo;
 
+import me.abebe.demo.repo.AppRoleRepository;
+import me.abebe.demo.repo.AppUserRepository;
+import me.abebe.demo.repo.ProfileRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -12,6 +17,12 @@ import java.util.List;
 
 @Controller
 public class MainController {
+    @Autowired
+    AppRoleRepository appRoleRepository;
+    @Autowired
+    AppUserRepository appUserRepository;
+    @Autowired
+    ProfileRepository profileRepository;
     @GetMapping("/")
     public String show(Model model){
 
@@ -51,15 +62,21 @@ public class MainController {
     }
     @GetMapping("/searchterm")
         public String getsearch(Model model){
+        model.addAttribute("profile", new Profile());
+        model.addAttribute("cat", Category.class);
             return "addtoprofile";
         }
 
     @RequestMapping("/searchterm")
-    public String findTopics(HttpServletRequest request, Model model){
+    public String findTopics(HttpServletRequest request, Model model, @ModelAttribute Profile profile){
+
+profileRepository.save(profile);
 String s = request.getParameter("search");
-model.addAttribute(s);
+String s2 = request.getParameter("cats");
+Category.ENTERTAINMENT.getCategoryId();
+System.out.println(s2);
+model.addAttribute("s",s);
 String url ="https://newsapi.org/v2/everything?q=" + s+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
-        System.out.println(url);
 RestTemplate restTemplate = new RestTemplate();
 NewsApi api = restTemplate.getForObject(url , NewsApi.class);
         List<Articles> art = new ArrayList<>();
