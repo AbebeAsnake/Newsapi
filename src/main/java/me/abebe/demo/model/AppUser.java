@@ -3,6 +3,9 @@ package me.abebe.demo.model;
 import me.abebe.demo.Profile;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Email;
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -35,7 +38,7 @@ public class AppUser {
     @Column(name = "username")
     private String username;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "users")
     private Set<Profile> profiles;
 
     @CreationTimestamp
@@ -46,9 +49,22 @@ public class AppUser {
     @JoinTable(joinColumns=@JoinColumn(name = "user_id"),
             inverseJoinColumns=@JoinColumn(name="role_id"))
     private Set<AppRole> roles;
+
+    @Transient //Equivalent to an ignore statement
+    private PasswordEncoder encoder;
+
+
+    @Transient //Equivalent to an ignore statement
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+
     public AppUser() {
         this.roles = new HashSet<>();
         this.profiles = new HashSet<>();
+        encoder = passwordEncoder();
 
     }
 
@@ -73,9 +89,20 @@ public class AppUser {
         this.lastName = lastName;
         this.email = email;
         this.image = image;
-        this.password = password;
+        this.roles = new HashSet<>();
+        encoder = passwordEncoder();
+        setPassword(password);
         this.username = username;
         this.createdAt = createdAt;
+    }
+    public AppUser(String username, String password, AppRole role) {
+        this.username = username;
+        this.roles = new HashSet<>();
+        this.profiles = new HashSet<>();
+        addRole(role);
+        encoder = passwordEncoder();
+        setPassword(password);
+
     }
     @Override
     public String toString() {
@@ -145,7 +172,7 @@ public class AppUser {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = encoder.encode(password);
     }
 
     public Timestamp getCreatedAt() {

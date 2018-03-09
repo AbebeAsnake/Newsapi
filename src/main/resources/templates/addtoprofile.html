@@ -2,14 +2,21 @@
 <html lang="en" xmlns:th="www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Title</title>
+    <title>Add to profile</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="/css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="/css/head.css" type="text/css"/>
+    <div th:replace ="base :: navbar"></div>
 </head>
 <body>
-<form th:action="@{/searchterm}" th:object="${find}" method="post">
-    <input type="text" name="search"/>
-    <input type="submit" value="submit"/>
+<form th:action="@{/addtopiccategory}" th:object="${profile}" method="post">
+    <input type="hidden" th:field="*{id}"/>
+    <input type="text" th:field="*{topic}" name="topics"/>
+    <input type="submit" value="Add topic"/>
 </form>
-<form th:action="@{/searchterm}" th:object="${profile}" method="post">
+<!--<form th:action="@{/searchterm}" th:object="${profile}" method="post">
     <select th:field="*{category}" name ="cats">
         <option th:each="ca:${cat}" th:value="${ca.BUSINESS}" th:text="${ca.BUSINESS}" th:selected="*{category}"></option>
         <option th:each="ca:${cat}" th:value="${ca.ENTERTAINMENT}" th:text="${ca.ENTERTAINMENT}" th:selected="*{category}"></option>
@@ -20,6 +27,6 @@
         <option th:each="ca:${cat}" th:value="${ca.TECHNOLOGY}" th:text="${ca.TECHNOLOGY}" th:selected="*{category}"></option>
     </select>
     <input type="submit" value="submit"/>
-</form>
+</form>-->
 </body>
 </html>

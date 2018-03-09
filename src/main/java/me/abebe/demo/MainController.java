@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
@@ -43,6 +44,7 @@ public class MainController {
        art= api
                .getArticles();
         model.addAttribute("hey",  art);
+
         //model.addAttribute("src", sources.getName());
         //model.addAttribute("src");
        /* for (Articles arts: art)
@@ -74,7 +76,7 @@ public class MainController {
     @RequestMapping("/searchterm")
     public String findTopics(HttpServletRequest request, Model model, @ModelAttribute Profile profile){
 
-        String s = request.getParameter("search");
+        String s = request.getParameter("q");
         String s2 = request.getParameter("cats");
 //Category.ENTERTAINMENT.getCategoryId();
 System.out.println(s2);
@@ -97,32 +99,39 @@ model.addAttribute("everything " , art);
 
 return "searchresult";
     }
-    @RequestMapping("/listprofile")
+    @GetMapping("/listprofile")
     public String showProfile(Model model, Authentication auth){
         AppUser user = appUserRepository.findAppUserByUsername(auth.getName());
-        Iterable<Profile> prof = profileRepository.findByUsersIn(user);
+        Iterable<Profile> prof = profileRepository.findDistinctByUsersIn(user);
+        List<Articles> art = new ArrayList<>();
 
+        model.addAttribute("hey",  art);
         for (Profile p: prof)
         {
-            String urlt ="https://newsapi.org/v2/everything?q=" + p.getTopic()+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
-            String urlc ="https://newsapi.org/v2/everything?q=" + p.getCategory()+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+            String urlt ="https://newsapi.org/v2/everything?q=" +
+                    p.getTopic()+
+                    "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+           // String urlc ="https://newsapi.org/v2/everything?q=" + p.getCategory()+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
             RestTemplate restTemplateT = new RestTemplate();
             NewsApi apit = restTemplateT.getForObject(urlt , NewsApi.class);
-            model.addAttribute("topics",  apit.getArticles());
+            //model.addAttribute("topics", apit.getArticles());
+            art= apit
+                    .getArticles();
+            model.addAttribute("topics",  art);
 
 
-            RestTemplate restTemplateC = new RestTemplate();
+           /* RestTemplate restTemplateC = new RestTemplate();
             NewsApi apic = restTemplateC.getForObject(urlc , NewsApi.class);
 
-            model.addAttribute("categories", apic.getArticles());
+            model.addAttribute("categories", apic.getArticles());*/
             //title
         }
 //model.addAttribute("list", profileRepository.findByUsersIn(user));
 
-return "listprofile";
+return "myprofile";
     }
     @RequestMapping("/addtopiccategory")
-    public String topicCategory(@Valid Profile profile, BindingResult result, Model model, Authentication auth, HttpServletRequest request ){
+    public String topicCategory(@Valid @ModelAttribute Profile profile, BindingResult result, Model model, Authentication auth, HttpServletRequest request ){
        // profileRepository.save(profile);
         String s = request.getParameter("search");
         String s2 = request.getParameter("cats");
@@ -132,6 +141,28 @@ return "listprofile";
             return "addtoprofile";
         }
         profileRepository.save(profile);
-        return "listprofile";
+        return "redirect:/listprofile";
     }
+    @GetMapping("/addprofile")
+    public String addToProfile(Model model){
+        model.addAttribute("profile", new Profile());
+        return "addtoprofile";
+    }
+    @GetMapping("/showprofile")
+    public String shoeProfile(Model model, Authentication auth){
+        AppUser user = appUserRepository.findAppUserByUsername(auth.getName());
+        model.addAttribute("prof",profileRepository.findByUsersIn(user) );
+        //System.out.println(profileRepository.findByUsersIn(user));
+
+        return "showprofile";
+    }
+@GetMapping("/delete/{id}")
+    public String deleteProfile(@PathVariable("id") long id, Model model){
+    Profile profile = profileRepository.findById(id);
+       profileRepository.delete(profile);
+       return "redirect:/showprofile";
 }
+    ////////////////////////////////////////////
+
+
+    }

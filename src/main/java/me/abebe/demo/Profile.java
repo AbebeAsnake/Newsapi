@@ -19,7 +19,7 @@ public class Profile {
     @Column (name = "topic")
     private String topic;
 
-    @ManyToMany(mappedBy = "profiles")
+    @ManyToMany(fetch = FetchType.EAGER)
     private Set<AppUser> users;
 
     public Profile(String topic) {

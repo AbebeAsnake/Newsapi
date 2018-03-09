@@ -2,6 +2,7 @@ package me.abebe.demo.security;
 
 import me.abebe.demo.repo.AppUserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -9,26 +10,34 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-@Configuration
+
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
+public class SecurityConfiguration   extends WebSecurityConfigurerAdapter{
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Autowired
-    SSUserDetailsService userDetailsService;
 
-    @Autowired
     AppUserRepository userRepository;
-
 
     @Override
     public UserDetailsService userDetailsServiceBean() throws Exception {
-        return new SSUserDetailsService(userRepository);
+        return new SSUDS(userRepository);
+    }
 
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
-
+        PasswordEncoder pE = passwordEncoder();
+        auth.inMemoryAuthentication().withUser("username").password(pE.encode("password")).authorities("USER")
+                .and().withUser("admin").password(pE.encode("password")).authorities("ADMIN");
+        auth.userDetailsService(userDetailsServiceBean());
     }
 
     private static final String[] PUBLIC_MATCHERS = {
@@ -40,7 +49,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
             "/templates/**",
             "/js/**",
             "/listlost",
-            "/searchterm"
+            "/login"
 
     };
     @Override
@@ -51,7 +60,7 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 //                .permitall: dont need access pages everyone one can acees this route example:register
                 .antMatchers(PUBLIC_MATCHERS).permitAll()
 //                .access("hasAuthority('ROLE_USER') or hasAuthority('ROLE_ADMIN')")
-                .antMatchers("/admin","/additems","/myitems").access("hasAuthority('USER') or hasAuthority('ADMIN')" )
+                .antMatchers("/admin", "/searchterm").access("hasAuthority('USER') or hasAuthority('ADMIN')" )
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -83,15 +92,6 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
 
 
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth)
-            throws Exception{
 
-
-//        Database Authentication must come after in memory authentication
-        auth
-                .userDetailsService(userDetailsServiceBean());
-
-    }
 
 }
