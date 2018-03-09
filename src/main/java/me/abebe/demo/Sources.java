@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Source {
+public class Sources {
     private String id;
     private String name;
     private String description;
@@ -13,7 +13,7 @@ public class Source {
     private String language;
     private String country;
 
-    public Source(String id, String name, String description, String url, String category, String language, String country) {
+    public Sources(String id, String name, String description, String url, String category, String language, String country) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -23,7 +23,7 @@ public class Source {
         this.country = country;
     }
 
-    public Source() {
+    public Sources() {
     }
 
     public String getId() {

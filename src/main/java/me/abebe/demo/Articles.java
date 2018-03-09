@@ -12,10 +12,10 @@ public class Articles {
     private String description;
     private String url;
     private String urlToImage;
-    private Source source;
+    private Sources source;
     private String publishedAt;
 
-    public Articles(String author, String title, String description, String url, String urlToImage, Source source, String publishedAt) {
+    public Articles(String author, String title, String description, String url, String urlToImage, Sources source, String publishedAt) {
         this.author = author;
         this.title = title;
         this.description = description;
@@ -41,11 +41,11 @@ public class Articles {
                 '}';
     }
 
-    public Source getSources() {
+    public Sources getSources() {
         return source;
     }
 
-    public void setSources(Source sources) {
+    public void setSources(Sources sources) {
         this.source = sources;
     }
 

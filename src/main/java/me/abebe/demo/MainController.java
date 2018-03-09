@@ -187,11 +187,11 @@ return "myprofile";
     public String getCategory(Model model){
 
         String url = "https://newsapi.org/v2/sources?language=en&apiKey=7f54c2f6c69248f0b2af877e2362420e";
-        RestTemplate restTemplateT = new RestTemplate();
-        Source cats = restTemplateT.getForObject(url , Source.class);
+        RestTemplate restTemplate = new RestTemplate();
+        Sources cats = restTemplate.getForObject(url , Sources.class);
 
-        model.addAttribute("cats",  cats);
-
+        model.addAttribute("cats",  cats.getCategory());
+System.out.println(cats.getCategory());
         return "showcategory";
     }
     ////////////////////////////////////////////
