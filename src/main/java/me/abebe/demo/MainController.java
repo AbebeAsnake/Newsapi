@@ -19,9 +19,9 @@ public class MainController {
         String url = "https://newsapi.org/v2/top-headlines?country=us&apiKey=7f54c2f6c69248f0b2af877e2362420e";
         NewsApi api = restTemplate.getForObject(url, NewsApi.class);
 
-        RestTemplate restTemplate2 = new RestTemplate();
+        //RestTemplate restTemplate2 = new RestTemplate();
         //Articles article = restTemplate.getForObject(url, Articles.class);
-        Source sources = restTemplate2.getForObject("https://newsapi.org/v2/sources?apiKey=7f54c2f6c69248f0b2af877e2362420e", Source.class);
+        //Source sources = restTemplate2.getForObject("https://newsapi.org/v2/sources?apiKey=7f54c2f6c69248f0b2af877e2362420e", Source.class);
 
        // Articles articles = new Articles();
        List<Articles> art = new ArrayList<>();
@@ -48,5 +48,33 @@ public class MainController {
       // System.out.println(sources.getName());
        return  "index";
 
+    }
+    @GetMapping("/searchterm")
+        public String getsearch(Model model){
+            return "addtoprofile";
+        }
+
+    @RequestMapping("/searchterm")
+    public String findTopics(HttpServletRequest request, Model model){
+String s = request.getParameter("search");
+model.addAttribute(s);
+String url ="https://newsapi.org/v2/everything?q=" + s+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+        System.out.println(url);
+RestTemplate restTemplate = new RestTemplate();
+NewsApi api = restTemplate.getForObject(url , NewsApi.class);
+        List<Articles> art = new ArrayList<>();
+        art= api
+                .getArticles();
+
+model.addAttribute("everything " , art);
+
+        for (Articles arts: art)
+        {
+            model.addAttribute("hey",  art);
+            // title
+           // System.out.println(arts.getSources().getName());
+        }
+
+return "searchresult";
     }
 }

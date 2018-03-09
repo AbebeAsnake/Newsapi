@@ -35,21 +35,12 @@ public class SecurityConfiguration  extends WebSecurityConfigurerAdapter {
             "/",
             "/h2-console/**",
             "/register",
-            "/addproduct",
-            "/listproduct",
-            "/productsdetail/**",
-            "/productupdate/**",
-            "/productdelete/**",
-            "/addCustomer",
-            "/listCustomer",
             "/search",
             "/css/**",
             "/templates/**",
             "/js/**",
             "/listlost",
-
-
-
+            "/searchterm"
 
     };
     @Override
