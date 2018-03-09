@@ -34,6 +34,7 @@ public class AppUser {
     @NotNull
     @Column(name = "username")
     private String username;
+
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Profile> profiles;
 

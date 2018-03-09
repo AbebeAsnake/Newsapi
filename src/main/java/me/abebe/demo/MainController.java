@@ -1,17 +1,21 @@
 package me.abebe.demo;
 
+import me.abebe.demo.model.AppUser;
 import me.abebe.demo.repo.AppRoleRepository;
 import me.abebe.demo.repo.AppUserRepository;
 import me.abebe.demo.repo.ProfileRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,10 +74,9 @@ public class MainController {
     @RequestMapping("/searchterm")
     public String findTopics(HttpServletRequest request, Model model, @ModelAttribute Profile profile){
 
-profileRepository.save(profile);
-String s = request.getParameter("search");
-String s2 = request.getParameter("cats");
-Category.ENTERTAINMENT.getCategoryId();
+        String s = request.getParameter("search");
+        String s2 = request.getParameter("cats");
+//Category.ENTERTAINMENT.getCategoryId();
 System.out.println(s2);
 model.addAttribute("s",s);
 String url ="https://newsapi.org/v2/everything?q=" + s+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
@@ -93,5 +96,42 @@ model.addAttribute("everything " , art);
         }
 
 return "searchresult";
+    }
+    @RequestMapping("/listprofile")
+    public String showProfile(Model model, Authentication auth){
+        AppUser user = appUserRepository.findAppUserByUsername(auth.getName());
+        Iterable<Profile> prof = profileRepository.findByUsersIn(user);
+
+        for (Profile p: prof)
+        {
+            String urlt ="https://newsapi.org/v2/everything?q=" + p.getTopic()+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+            String urlc ="https://newsapi.org/v2/everything?q=" + p.getCategory()+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+            RestTemplate restTemplateT = new RestTemplate();
+            NewsApi apit = restTemplateT.getForObject(urlt , NewsApi.class);
+            model.addAttribute("topics",  apit.getArticles());
+
+
+            RestTemplate restTemplateC = new RestTemplate();
+            NewsApi apic = restTemplateC.getForObject(urlc , NewsApi.class);
+
+            model.addAttribute("categories", apic.getArticles());
+            //title
+        }
+//model.addAttribute("list", profileRepository.findByUsersIn(user));
+
+return "listprofile";
+    }
+    @RequestMapping("/addtopiccategory")
+    public String topicCategory(@Valid Profile profile, BindingResult result, Model model, Authentication auth, HttpServletRequest request ){
+       // profileRepository.save(profile);
+        String s = request.getParameter("search");
+        String s2 = request.getParameter("cats");
+        AppUser user = appUserRepository.findAppUserByUsername(auth.getName());
+        profile.addUser(user);
+        if (result.hasErrors()) {
+            return "addtoprofile";
+        }
+        profileRepository.save(profile);
+        return "listprofile";
     }
 }
