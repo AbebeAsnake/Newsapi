@@ -1,5 +1,6 @@
 package me.abebe.demo.model;
 
+import me.abebe.demo.Profile;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Email;
 
@@ -33,7 +34,8 @@ public class AppUser {
     @NotNull
     @Column(name = "username")
     private String username;
-
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Profile> profiles;
 
     @CreationTimestamp
     @Column(name ="time_stamp")
@@ -45,7 +47,20 @@ public class AppUser {
     private Set<AppRole> roles;
     public AppUser() {
         this.roles = new HashSet<>();
+        this.profiles = new HashSet<>();
 
+    }
+
+    public Set<Profile> getProfiles() {
+        return profiles;
+    }
+
+    public void setProfiles(Set<Profile> profiles) {
+        this.profiles = profiles;
+    }
+
+    public void addProfile(Profile pro){
+        this.profiles.add(pro);
     }
     public void addRole(AppRole role)
     {

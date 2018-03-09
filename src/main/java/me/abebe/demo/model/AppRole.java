@@ -1,8 +1,7 @@
 package me.abebe.demo.model;
 
-import me.abebe.demo.profile;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.HashSet;
