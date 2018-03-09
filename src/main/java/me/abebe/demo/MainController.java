@@ -162,6 +162,25 @@ return "myprofile";
        profileRepository.delete(profile);
        return "redirect:/showprofile";
 }
+
+    @GetMapping("/view/{id}")
+    public String viewprofiles(@PathVariable("id") long id, Model model, Authentication auth, HttpServletRequest request){
+        String r = request.getParameter("r");
+        Profile profile = profileRepository.findById(id);
+
+        AppUser user = appUserRepository.findAppUserByUsername(auth.getName());
+       Profile prof = profileRepository.findDistinctByUsersInAndId(user,id);
+
+        String urlt ="https://newsapi.org/v2/everything?q=" +
+                prof.getTopic()+
+                "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+        // String urlc ="https://newsapi.org/v2/everything?q=" + p.getCategory()+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+        RestTemplate restTemplateT = new RestTemplate();
+        NewsApi apit = restTemplateT.getForObject(urlt , NewsApi.class);
+
+        model.addAttribute("topics", apit.getArticles());
+        return "myprofile";
+    }
     ////////////////////////////////////////////
 
 

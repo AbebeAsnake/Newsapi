@@ -16,10 +16,9 @@
     <div class="plan" th:each="pro : ${prof}">
         <h3 th:inline="text">[[${pro.topic}]]<span>profile</span></h3>
         <a th:href="@{/delete/{id} (id = ${pro.id})}">Delete</a>
-        <ul th:text="${pro.topic}">
+       <a th:href="@{/view/{id} (id = ${pro.id})}" name ="r" ><ul th:text="${pro.topic}" name ="r">
 
-
-        </ul>
+        </ul></a>
     </div>
 
 </div>

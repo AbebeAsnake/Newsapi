@@ -9,5 +9,7 @@ import java.util.List;
 public interface ProfileRepository extends CrudRepository<Profile, Long> {
     Iterable<Profile> findByUsersIn(AppUser users);
     List<Profile> findDistinctByUsersIn(AppUser user);
+
+    Profile findDistinctByUsersInAndId(AppUser user, long id);
     Profile findById(long id);
 }
