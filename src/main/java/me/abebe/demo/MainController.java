@@ -150,6 +150,7 @@ return "myprofile";
     }
     @GetMapping("/showprofile")
     public String shoeProfile(Model model, Authentication auth){
+
         AppUser user = appUserRepository.findAppUserByUsername(auth.getName());
         model.addAttribute("prof",profileRepository.findByUsersIn(user) );
         //System.out.println(profileRepository.findByUsersIn(user));
@@ -180,6 +181,18 @@ return "myprofile";
 
         model.addAttribute("topics", apit.getArticles());
         return "myprofile";
+    }
+
+    @GetMapping("/cat")
+    public String getCategory(Model model){
+
+        String url = "https://newsapi.org/v2/sources?language=en&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+        RestTemplate restTemplateT = new RestTemplate();
+        Source cats = restTemplateT.getForObject(url , Source.class);
+
+        model.addAttribute("cats",  cats);
+
+        return "showcategory";
     }
     ////////////////////////////////////////////
 

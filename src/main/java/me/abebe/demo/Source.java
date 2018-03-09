@@ -7,25 +7,20 @@ import java.util.List;
 public class Source {
     private String id;
     private String name;
-    //private String description;
-   // private String url;
-    //private Category category;
-    //private Language language;
-    //private Country country;
-    //private List<String> logos;
-    //private List<Sorting> sortingMethods;
+    private String description;
+    private String url;
+    private String category;
+    private String language;
+    private String country;
 
-    /*public List<Sorting> getSortingMethods() {
-        return sortingMethods;
-    }
-
-    public void setSortingMethods(List<Sorting> sortingMethods) {
-        this.sortingMethods = sortingMethods;
-    }*/
-
-    public Source(String id, String name) {
+    public Source(String id, String name, String description, String url, String category, String language, String country) {
         this.id = id;
         this.name = name;
+        this.description = description;
+        this.url = url;
+        this.category = category;
+        this.language = language;
+        this.country = country;
     }
 
     public Source() {
@@ -47,7 +42,7 @@ public class Source {
         this.name = name;
     }
 
-    /*public String getDescription() {
+    public String getDescription() {
         return description;
     }
 
@@ -63,35 +58,27 @@ public class Source {
         this.url = url;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
-    public Language getLanguage() {
+    public String getLanguage() {
         return language;
     }
 
-    public void setLanguage(Language language) {
+    public void setLanguage(String language) {
         this.language = language;
     }
 
-    public Country getCountry() {
+    public String getCountry() {
         return country;
     }
 
-    public void setCountry(Country country) {
+    public void setCountry(String country) {
         this.country = country;
     }
-
-    public List<String> getLogos() {
-        return logos;
-    }
-
-    public void setLogos(List<String> logos) {
-        this.logos = logos;
-    }*/
 }
