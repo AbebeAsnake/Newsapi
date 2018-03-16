@@ -9,17 +9,13 @@
     <link rel="stylesheet" href="/css/head.css" type="text/css"/>
     <div th:replace ="base :: navbar"></div>
 </head>
-<body>
 
-<h1 >profiled articles</h1>
+<table class="news-holder cf" th:each="tis : ${topheadlines}">
 
-<div class="news-holder cf"   th:each="ti : ${topics}" th:if="${ti != null}" >
-    <ul class="news-headlines" >
-        <li class="selected" th:text=${ti.title}></li>
-        <li  th:text=${ti.author}></li>
-        <li  th:text=${ti.publishedAt}></li>
-
-    </ul>
+    <tr class="news-headlines" th:each="ti: ${tis.getArticles()}" >
+        <td class="selected" th:text=${ti.title}></td>
+        <td  th:text=${ti.author}></td>
+        <td  th:text=${ti.publishedAt}></td>
 
     <div class="news-preview">
 
@@ -35,37 +31,9 @@
 
     </div>
     <!-- .news-preview -->
-</div>
-
-
+    </tr>
+</table>
 <!-- .news-holder -->
-
-
-<div class="news-holder cf" th:if="${categories != null}" th:each="ti : ${categories}">
-
-    <ul class="news-headlines" >
-        <li class="selected" th:text=${ti.title}></li>
-        <li  th:text=${ti.author}></li>
-        <li  th:text=${ti.publishedAt}></li>
-
-    </ul>
-
-    <div class="news-preview">
-
-        <div class="news-content top-content">
-            <img th:src="${ti.urlToImage}" >
-            <p><a th:href="${ti.url}">[[${ti.title}]]</a></p>
-
-            <p th:text=${ti.description}></p>
-        </div>
-        <!-- .news-content -->
-
-        <!-- .news-content -->
-
-    </div>
-    <!-- .news-preview -->
-
-</div>
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
 <script src="/js/head.js"></script>
@@ -91,6 +59,7 @@
         integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
 
 
 </body>

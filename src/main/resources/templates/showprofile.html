@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
 <head>
     <meta charset="UTF-8"/>
     <title>Title</title>
@@ -14,11 +14,10 @@
 
 <div id="pricing-table" class="clear">
     <div class="plan" th:each="pro : ${prof}">
-        <h3 th:inline="text">[[${pro.topic}]]<span>profile</span></h3>
+        <h3 th:inline="text">[[${pro.topic}]]  </h3><h3 th:inline="text">[[${pro.category}]]<span>profile</span></h3>
         <a th:href="@{/delete/{id} (id = ${pro.id})}">Delete</a>
-       <a th:href="@{/view/{id} (id = ${pro.id})}" name ="r" ><ul th:text="${pro.topic}" name ="r">
-
-        </ul></a>
+        <a th:href="@{/view/{id} (id = ${pro.id})}" name ="r" ><ul th:text="${pro.topic}" name ="r"></ul></a>
+           <a th:href="@{/view/{id} (id = ${pro.id})}" name ="r" ><ul th:text="${pro.category}" name ="r"></ul></a>
     </div>
 
 </div>

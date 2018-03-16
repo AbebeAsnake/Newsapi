@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="www.thymeleaf.org">
+<html lang="en" xmlns:th="www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security4">
 <head>
     <meta charset="UTF-8"/>
     <title>Add to profile</title>
@@ -16,6 +16,25 @@
     <input type="text" th:field="*{topic}" name="topics"/>
     <input type="submit" value="Add topic"/>
 </form>
+
+<form class="form-group" th:action="@{/addtopiccategory}" th:method="post" th:object="${profile}">
+    <input type="hidden" th:field="*{id}">
+
+
+
+    <div class="row" style="margin-left: 400px;">
+        <select  id="topics" name="category" class="selectpicker" th:field="*{category}">
+
+
+            <option th:each="category :${categories}" th:value="${category}" th:text="${category}" selected="selected">
+
+            </option>
+        </select>
+        <input  type="Submit" value="Add Category">
+
+    </div>
+</form>
+
 <!--<form th:action="@{/searchterm}" th:object="${profile}" method="post">
     <select th:field="*{category}" name ="cats">
         <option th:each="ca:${cat}" th:value="${ca.BUSINESS}" th:text="${ca.BUSINESS}" th:selected="*{category}"></option>

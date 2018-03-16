@@ -18,7 +18,9 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -146,6 +148,22 @@ return "myprofile";
     @GetMapping("/addprofile")
     public String addToProfile(Model model){
         model.addAttribute("profile", new Profile());
+        RestTemplate restTemplate = new RestTemplate();
+
+        NewsPublishers newsPublishers = restTemplate.getForObject("https://newsapi.org/v2/sources?apiKey=7f54c2f6c69248f0b2af877e2362420e", NewsPublishers.class);
+
+        List<Sources> sources =  newsPublishers.getSources();
+
+        Set<String> categories = new HashSet<>();
+
+
+        for (Sources source : sources) {
+            if(source.getCategory()!=null) {
+                categories.add(source.getCategory());
+            }
+        }
+        model.addAttribute("categories", categories);
+
         return "addtoprofile";
     }
     @GetMapping("/showprofile")
@@ -167,6 +185,7 @@ return "myprofile";
     @GetMapping("/view/{id}")
     public String viewprofiles(@PathVariable("id") long id, Model model, Authentication auth, HttpServletRequest request){
         String r = request.getParameter("r");
+        String c = request.getParameter("c");
         Profile profile = profileRepository.findById(id);
 
         AppUser user = appUserRepository.findAppUserByUsername(auth.getName());
@@ -176,10 +195,18 @@ return "myprofile";
                 prof.getTopic()+
                 "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
         // String urlc ="https://newsapi.org/v2/everything?q=" + p.getCategory()+ "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
+
+        String urlc ="https://newsapi.org/v2/everything?q=" +
+                prof.getCategory()+
+                "&apiKey=7f54c2f6c69248f0b2af877e2362420e";
         RestTemplate restTemplateT = new RestTemplate();
         NewsApi apit = restTemplateT.getForObject(urlt , NewsApi.class);
 
+        RestTemplate restTemplateC = new RestTemplate();
+        NewsApi apic = restTemplateC.getForObject(urlc , NewsApi.class);
+
         model.addAttribute("topics", apit.getArticles());
+        model.addAttribute("categories", apic.getArticles());
         return "myprofile";
     }
 
@@ -196,5 +223,30 @@ System.out.println(cats.getCategory());
     }
     ////////////////////////////////////////////
 
+   /* @GetMapping("/addtoprofile")
+    public String addCategory(Model model) {
 
-    }
+        RestTemplate restTemplate = new RestTemplate();
+
+        NewsPublishers newsPublishers = restTemplate.getForObject("https://newsapi.org/v2/sources?apiKey=7f54c2f6c69248f0b2af877e2362420e", NewsPublishers.class);
+
+        List<Sources> sources =  newsPublishers.getSources();
+
+        Set<String> categories = new HashSet<>();
+
+
+        for (Sources source : sources) {
+            if(source.getCategory()!=null) {
+                categories.add(source.getCategory());
+            }
+        }
+        model.addAttribute("categories", categories);
+
+
+        model.addAttribute("profile", new Profile());
+
+        return "addtoprofile";
+    }*/
+
+
+}

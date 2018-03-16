@@ -14,7 +14,7 @@ public class Profile {
     private long id;
 
     @Column(name = "category")
-    private Category category;
+    private String category;
 
     @Column (name = "topic")
     private String topic;
@@ -68,11 +68,11 @@ public class Profile {
         this.id = id;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 

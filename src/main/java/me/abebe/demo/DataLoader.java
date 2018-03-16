@@ -54,7 +54,7 @@ public class DataLoader implements CommandLineRunner {
         Profile pro = new Profile();
         pro.addUser(userRepository.findAppUserByUsername("user"));
         pro.setTopic("Music");
-        pro.setCategory(Category.ENTERTAINMENT);
+        //pro.setCategory(Category.ENTERTAINMENT);
         profileRepository.save(pro);
 
     }
